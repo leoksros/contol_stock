@@ -3,7 +3,7 @@ package entities;
 public class Usuario {
 
 	private int id;
-	private int id_rol;
+	private String id_rol;
 	private String usuario;
 	private String nombre;
 	private String apellido;
@@ -16,10 +16,10 @@ public class Usuario {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getId_rol() {
+	public String getId_rol() {
 		return id_rol;
 	}
-	public void setId_rol(int id_rol) {
+	public void setId_rol(String id_rol) {
 		this.id_rol = id_rol;
 	}
 	public String getUsuario() {

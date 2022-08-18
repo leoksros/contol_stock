@@ -1,25 +1,27 @@
-package servlets.Usuario;
+package servlets.Rol;
+
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import entities.Usuario;
+
+import entities.Role;
+import logic.RolLogic;
 import logic.UsuarioLogic;
 
 /**
- * Servlet implementation class CrearUsuario
+ * Servlet implementation class NuevoRol
  */
-@WebServlet("/crear_usuario")
-public class CrearUsuario extends HttpServlet {
+@WebServlet("/nuevo_rol")
+public class NuevoRol extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CrearUsuario() {
+    public NuevoRol() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,22 +38,14 @@ public class CrearUsuario extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Role role = new Role();
+		RolLogic  rolLogic = new RolLogic();
 		
+		role.setDesc(request.getParameter("desc"));
+
+		rolLogic.create(role);
 		
-		Usuario usuario = new Usuario();
-		UsuarioLogic  usuarioLogic = new UsuarioLogic();
-		
-		usuario.setNombre(request.getParameter("nombre"));
-		usuario.setApellido(request.getParameter("apellido"));
-		usuario.setEmail(request.getParameter("email"));
-		usuario.setUsuario(request.getParameter("usuario"));
-		usuario.setPassword(request.getParameter("password"));
-		usuario.setId_rol(request.getParameter("role"));
-		
-		usuarioLogic.create(usuario);
-		
-		
-		request.getRequestDispatcher("lista_usuarios.jsp");
+		response.getWriter().append("Rol: ").append(role.toString());
 	}
 
 }

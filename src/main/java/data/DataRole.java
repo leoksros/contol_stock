@@ -1,27 +1,30 @@
 package data;
-import entities.Usuario;
-import java.sql.*;
-import java.util.LinkedList;
 
-public class DataUsuario {
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.LinkedList;
+import java.sql.Statement;
+import entities.*;
+
+
+
+public class DataRole {
 	
-	public LinkedList<Usuario> getAll(){
+	public LinkedList<Role> getAll(){
 		Statement stmt = null;
 		ResultSet rs = null;
-		LinkedList<Usuario> usuarios = new LinkedList<>();
+		LinkedList<Role> roles = new LinkedList<>();
 		
 		try {
 			stmt= DbConnector.getInstancia().getConn().createStatement();
-			rs= stmt.executeQuery("select * from usuarios");
+			rs= stmt.executeQuery("select * from roles");
 			if(rs!=null) {
 				while(rs.next()) {
-					Usuario u=new Usuario();
-					u.setId(rs.getInt("id"));
-					u.setNombre(rs.getString("nombre"));
-					u.setApellido(rs.getString("apellido"));
-					u.setEmail(rs.getString("email"));
-					u.setUsuario(rs.getString("usuario"));
-					usuarios.add(u);
+					Role r=new Role();
+					r.setId(rs.getInt("id"));
+					r.setDesc(rs.getString("desc"));
+					roles.add(r);
 				}
 			}
 			
@@ -39,11 +42,10 @@ public class DataUsuario {
 		}
 		
 		
-		return usuarios;
+		return roles;
 	}
 	
-	
-	public void create(Usuario user) {
+	public void create(Role role) {
 		
 		PreparedStatement stmt= null;
 		ResultSet keyResultSet=null;
@@ -51,22 +53,17 @@ public class DataUsuario {
 		try {
 			stmt= DbConnector.getInstancia().getConn().
 					prepareStatement(
-							"insert into usuarios(usuario, nombre, apellido, email, password, id_rol) values(?,?,?,?,?,?)",
+							"insert into roles (`desc`) values(?)",
 							PreparedStatement.RETURN_GENERATED_KEYS
 							);
 			
-			stmt.setString(1, user.getUsuario());
-			stmt.setString(2, user.getNombre());
-			stmt.setString(3, user.getApellido());
-			stmt.setString(4, user.getEmail());
-			stmt.setString(5, user.getPassword());
-			stmt.setString(6, user.getId_rol());
+			stmt.setString(1, role.getDesc());
 
 			stmt.executeUpdate();
 			
 			keyResultSet=stmt.getGeneratedKeys();
             if(keyResultSet!=null && keyResultSet.next()){
-            	user.setId(keyResultSet.getInt(1));
+            	role.setId(keyResultSet.getInt(1));
             }
 
 			
@@ -82,6 +79,6 @@ public class DataUsuario {
             }
 		}
 		
-	}
+	}	
 
 }
