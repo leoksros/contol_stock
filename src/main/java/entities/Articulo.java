@@ -3,12 +3,16 @@ package entities;
 public class Articulo {
 	
 	private int id;
-	private String desc_articulo;
+	private String desc;
 	private double precio;
 	
 	public Articulo(String desc_articulo, double precio) {
-		this.desc_articulo = desc_articulo;
+		this.desc = desc_articulo;
 		this.precio = precio;
+	}
+	
+	public Articulo() {
+		
 	}
 
 	public int getId() {
@@ -19,12 +23,12 @@ public class Articulo {
 		this.id = id;
 	}
 
-	public String getDesc_articulo() {
-		return desc_articulo;
+	public String getDesc() {
+		return desc;
 	}
 
-	public void setDesc_articulo(String desc_articulo) {
-		this.desc_articulo = desc_articulo;
+	public void setDesc(String desc) {
+		this.desc = desc;
 	}
 
 	public double getPrecio() {
@@ -35,6 +39,9 @@ public class Articulo {
 		this.precio = precio;
 	}
 
-
+	@Override
+	public String toString() {
+		return "Articulo [id=" + id + ", desc=" + desc + ", precio=" + precio + "]";
+	}
 	
 }
